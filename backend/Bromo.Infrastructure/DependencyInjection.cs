@@ -24,8 +24,10 @@ public static class DependencyInjection
             ?? Environment.GetEnvironmentVariable("DATABASE_URL")
             ?? Environment.GetEnvironmentVariable("DATABASE_PUBLIC_URL");
 
+        var hostEnv = configuration["PGHOST"] ?? configuration["POSTGRES_HOST"] ?? Environment.GetEnvironmentVariable("PGHOST") ?? Environment.GetEnvironmentVariable("POSTGRES_HOST");
         var configuredConn = configuration.GetConnectionString("DefaultConnection");
         bool hasPostgresConfig = !string.IsNullOrWhiteSpace(envDbUrl) || 
+            !string.IsNullOrWhiteSpace(hostEnv) ||
             (!string.IsNullOrWhiteSpace(configuredConn) && !configuredConn.Contains("your_secure_password"));
 
         if (hasPostgresConfig)
@@ -95,14 +97,26 @@ public static class DependencyInjection
             return ParsePostgreSqlUrl(envDbUrl);
         }
 
-        // 2. Otherwise check ConnectionStrings:DefaultConnection
+        // 2. Check individual Postgres environment variables (PGHOST, POSTGRES_HOST, etc.)
+        var host = configuration["PGHOST"] ?? configuration["POSTGRES_HOST"] ?? Environment.GetEnvironmentVariable("PGHOST") ?? Environment.GetEnvironmentVariable("POSTGRES_HOST");
+        var port = configuration["PGPORT"] ?? configuration["POSTGRES_PORT"] ?? Environment.GetEnvironmentVariable("PGPORT") ?? Environment.GetEnvironmentVariable("POSTGRES_PORT") ?? "5432";
+        var user = configuration["PGUSER"] ?? configuration["POSTGRES_USER"] ?? Environment.GetEnvironmentVariable("PGUSER") ?? Environment.GetEnvironmentVariable("POSTGRES_USER");
+        var pass = configuration["PGPASSWORD"] ?? configuration["POSTGRES_PASSWORD"] ?? Environment.GetEnvironmentVariable("PGPASSWORD") ?? Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
+        var db = configuration["PGDATABASE"] ?? configuration["POSTGRES_DB"] ?? Environment.GetEnvironmentVariable("PGDATABASE") ?? Environment.GetEnvironmentVariable("POSTGRES_DB");
+
+        if (!string.IsNullOrWhiteSpace(host) && !string.IsNullOrWhiteSpace(user))
+        {
+            return $"Host={host};Port={port};Database={db};Username={user};Password={pass};SSL Mode=Prefer;Trust Server Certificate=true;";
+        }
+
+        // 3. Otherwise check ConnectionStrings:DefaultConnection
         var connStr = configuration.GetConnectionString("DefaultConnection");
         if (!string.IsNullOrWhiteSpace(connStr) && !connStr.Contains("your_secure_password"))
         {
             return ParsePostgreSqlUrl(connStr);
         }
 
-        // 3. Fallback for local development
+        // 4. Fallback for local development
         return "Host=localhost;Port=5432;Database=bromo_wanderlush_db;Username=postgres;Password=postgres;";
     }
 
