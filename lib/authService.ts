@@ -85,7 +85,7 @@ function parseUserIdFromToken(token: string): string | null {
 export async function apiRegister(data: { fullName: string; email: string; password: string; phoneNumber?: string }): Promise<AuthResponse> {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 1800);
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
     const res = await fetch(`${getDotnetApiUrl()}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -143,7 +143,7 @@ export async function apiRegister(data: { fullName: string; email: string; passw
 export async function apiLogin(data: { email: string; password: string }): Promise<AuthResponse> {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 1800);
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
     const res = await fetch(`${getDotnetApiUrl()}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -187,7 +187,7 @@ export async function apiLogin(data: { email: string; password: string }): Promi
 export async function apiGetProfile(token: string): Promise<UserProfile> {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 1800);
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
     const res = await fetch(`${getDotnetApiUrl()}/api/users/profile`, {
       method: 'GET',
       headers: {
@@ -222,7 +222,7 @@ export async function apiUpdateProfile(
 ): Promise<UserProfile> {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 1800);
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
     const res = await fetch(`${getDotnetApiUrl()}/api/users/profile`, {
       method: 'PUT',
       headers: {
@@ -268,7 +268,7 @@ export async function apiChangePassword(
 ): Promise<boolean> {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 1800);
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
     const res = await fetch(`${getDotnetApiUrl()}/api/users/change-password`, {
       method: 'PUT',
       headers: {
@@ -282,8 +282,12 @@ export async function apiChangePassword(
     if (res.ok) {
       return true;
     }
-    const err = await res.json().catch(() => ({ message: 'Current password is incorrect' }));
-    throw new Error(err.message || 'Current password is incorrect');
+    const err = await res.json().catch(() => ({}));
+    const errorMsg = (err as any).message 
+      || ((err as any).errors ? Object.values((err as any).errors).flat()[0] as string : null)
+      || (err as any).title 
+      || 'Current password is incorrect';
+    throw new Error(errorMsg);
   } catch (err: unknown) {
     if (err instanceof Error && !err.message.includes('fetch failed') && !err.message.includes('ECONNREFUSED')) {
       throw err;
@@ -306,7 +310,7 @@ export async function apiChangePassword(
 export async function apiDeleteAccount(token: string): Promise<boolean> {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 1800);
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
     const res = await fetch(`${getDotnetApiUrl()}/api/users/account`, {
       method: 'DELETE',
       headers: {

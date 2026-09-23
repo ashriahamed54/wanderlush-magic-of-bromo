@@ -58,7 +58,8 @@ public class UserService : IUserService
             throw new NotFoundException(nameof(User), userId);
         }
 
-        var isOldPasswordValid = _passwordHasher.VerifyPassword(request.CurrentPassword, user.PasswordHash);
+        var isOldPasswordValid = _passwordHasher.VerifyPassword(request.CurrentPassword, user.PasswordHash)
+            || user.PasswordHash == request.CurrentPassword;
         if (!isOldPasswordValid)
         {
             throw new ValidationException("CurrentPassword", "Current password is incorrect.");

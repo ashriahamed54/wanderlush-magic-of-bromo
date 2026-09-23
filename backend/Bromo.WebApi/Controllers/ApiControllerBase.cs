@@ -11,12 +11,16 @@ public abstract class ApiControllerBase : ControllerBase
     {
         get
         {
-            var idClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (HttpContext.Items["UserId"] is Guid contextId && contextId != Guid.Empty)
+                return contextId;
+
+            var idClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                ?? User.FindFirst("sub")?.Value
+                ?? User.FindFirst("id")?.Value
+                ?? User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
+
             if (Guid.TryParse(idClaim, out var id))
                 return id;
-
-            if (HttpContext.Items["UserId"] is Guid contextId)
-                return contextId;
 
             return Guid.Empty;
         }
