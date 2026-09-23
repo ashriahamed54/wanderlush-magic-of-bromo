@@ -22,7 +22,13 @@ export interface AuthResponse {
   user: UserProfile;
 }
 
-const DOTNET_API_URL = process.env.DOTNET_API_URL || 'http://localhost:5000';
+function getDotnetApiUrl(): string {
+  let url = (process.env.DOTNET_API_URL || 'http://localhost:5000').trim();
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = `https://${url}`;
+  }
+  return url.replace(/\/+$/, '');
+}
 
 // In-memory fallback database for the AI Studio preview environment
 interface StoredUser extends UserProfile {
@@ -80,7 +86,7 @@ export async function apiRegister(data: { fullName: string; email: string; passw
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 1800);
-    const res = await fetch(`${DOTNET_API_URL}/api/auth/register`, {
+    const res = await fetch(`${getDotnetApiUrl()}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -138,7 +144,7 @@ export async function apiLogin(data: { email: string; password: string }): Promi
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 1800);
-    const res = await fetch(`${DOTNET_API_URL}/api/auth/login`, {
+    const res = await fetch(`${getDotnetApiUrl()}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -182,7 +188,7 @@ export async function apiGetProfile(token: string): Promise<UserProfile> {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 1800);
-    const res = await fetch(`${DOTNET_API_URL}/api/users/profile`, {
+    const res = await fetch(`${getDotnetApiUrl()}/api/users/profile`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -217,7 +223,7 @@ export async function apiUpdateProfile(
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 1800);
-    const res = await fetch(`${DOTNET_API_URL}/api/users/profile`, {
+    const res = await fetch(`${getDotnetApiUrl()}/api/users/profile`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -263,7 +269,7 @@ export async function apiChangePassword(
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 1800);
-    const res = await fetch(`${DOTNET_API_URL}/api/users/change-password`, {
+    const res = await fetch(`${getDotnetApiUrl()}/api/users/change-password`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -301,7 +307,7 @@ export async function apiDeleteAccount(token: string): Promise<boolean> {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 1800);
-    const res = await fetch(`${DOTNET_API_URL}/api/users/account`, {
+    const res = await fetch(`${getDotnetApiUrl()}/api/users/account`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
