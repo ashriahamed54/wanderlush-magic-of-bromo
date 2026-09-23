@@ -27,8 +27,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 
-# Default port configuration (overridden dynamically by Railway's PORT env var)
-ENV ASPNETCORE_URLS=http://+:8080
+# Runtime
 EXPOSE 8080
-
 ENTRYPOINT ["dotnet", "Bromo.WebApi.dll"]

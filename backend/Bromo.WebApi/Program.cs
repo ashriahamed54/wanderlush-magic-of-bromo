@@ -7,11 +7,9 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Ensure Railway PORT environment variable is respected
-var port = Environment.GetEnvironmentVariable("PORT");
-if (!string.IsNullOrEmpty(port))
-{
-    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
-}
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+Environment.SetEnvironmentVariable("ASPNETCORE_URLS", $"http://+:{port}");
 
 // 1. Add Clean Architecture Layers & Services
 builder.Services.AddInfrastructureServices(builder.Configuration);
