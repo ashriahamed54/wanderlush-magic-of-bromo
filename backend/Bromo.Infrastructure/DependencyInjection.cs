@@ -20,8 +20,10 @@ public static class DependencyInjection
     {
         // 1. Database DbContext: PostgreSQL on Railway/Cloud, SQLite for smooth local development
         var envDbUrl = configuration["DATABASE_URL"] 
+            ?? configuration["DATABASE_PRIVATE_URL"]
             ?? configuration["DATABASE_PUBLIC_URL"] 
             ?? Environment.GetEnvironmentVariable("DATABASE_URL")
+            ?? Environment.GetEnvironmentVariable("DATABASE_PRIVATE_URL")
             ?? Environment.GetEnvironmentVariable("DATABASE_PUBLIC_URL");
 
         var hostEnv = configuration["PGHOST"] ?? configuration["POSTGRES_HOST"] ?? Environment.GetEnvironmentVariable("PGHOST") ?? Environment.GetEnvironmentVariable("POSTGRES_HOST");
@@ -86,10 +88,12 @@ public static class DependencyInjection
 
     private static string BuildPostgreSqlConnectionString(IConfiguration configuration)
     {
-        // 1. If DATABASE_URL or DATABASE_PUBLIC_URL is provided (e.g. Railway / Cloud Postgres), prioritize it!
+        // 1. If DATABASE_URL, DATABASE_PRIVATE_URL, or DATABASE_PUBLIC_URL is provided, prioritize it!
         var envDbUrl = configuration["DATABASE_URL"] 
+            ?? configuration["DATABASE_PRIVATE_URL"]
             ?? configuration["DATABASE_PUBLIC_URL"] 
             ?? Environment.GetEnvironmentVariable("DATABASE_URL")
+            ?? Environment.GetEnvironmentVariable("DATABASE_PRIVATE_URL")
             ?? Environment.GetEnvironmentVariable("DATABASE_PUBLIC_URL");
 
         if (!string.IsNullOrWhiteSpace(envDbUrl))
