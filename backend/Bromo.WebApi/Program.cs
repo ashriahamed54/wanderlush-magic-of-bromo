@@ -81,15 +81,14 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // 6. Swagger documentation
-if (app.Environment.IsDevelopment() || true)
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Wanderlush API v1");
-        c.RoutePrefix = string.Empty; // Swagger UI at root
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Wanderlush Clean Architecture API v1");
+    c.RoutePrefix = "swagger";
+});
+
+app.MapGet("/", () => Results.Redirect("/swagger"));
 
 // 7. Security and Routing Pipeline
 app.UseCors("AllowNextJsClient");
@@ -107,33 +106,26 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        if (db.Database.CanConnect())
-        {
-            logger.LogInformation("Successfully connected to PostgreSQL database.");
-            db.Database.EnsureCreated();
+        db.Database.EnsureCreated();
+        logger.LogInformation("Database connected and schema verified.");
 
-            if (!db.Users.Any())
-            {
-                var hasher = scope.ServiceProvider.GetRequiredService<Bromo.Application.Common.Interfaces.IPasswordHasher>();
-                db.Users.Add(new Bromo.Domain.Entities.User
-                {
-                    Id = Guid.Parse("a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d"),
-                    FullName = "Aris Prasetyo",
-                    Email = "aris.traveler@wanderlush.com",
-                    PasswordHash = hasher.HashPassword("Bromo2026!"),
-                    PhoneNumber = "+62 812-3456-7890",
-                    Bio = "Bromo caldera explorer, mountain photographer, and highland trekker.",
-                    AvatarUrl = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop",
-                    Role = Bromo.Domain.Enums.UserRole.Traveler,
-                    IsActive = true
-                });
-                db.SaveChanges();
-                logger.LogInformation("Seeded initial demo traveler into PostgreSQL.");
-            }
-        }
-        else
+        if (!db.Users.Any())
         {
-            logger.LogWarning("PostgreSQL database is currently unreachable. Requests will be handled once database is started or fallback mode.");
+            var hasher = scope.ServiceProvider.GetRequiredService<Bromo.Application.Common.Interfaces.IPasswordHasher>();
+            db.Users.Add(new Bromo.Domain.Entities.User
+            {
+                Id = Guid.Parse("a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d"),
+                FullName = "Aris Prasetyo",
+                Email = "aris.traveler@wanderlush.com",
+                PasswordHash = hasher.HashPassword("Bromo2026!"),
+                PhoneNumber = "+62 812-3456-7890",
+                Bio = "Bromo caldera explorer, mountain photographer, and highland trekker.",
+                AvatarUrl = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop",
+                Role = Bromo.Domain.Enums.UserRole.Traveler,
+                IsActive = true
+            });
+            db.SaveChanges();
+            logger.LogInformation("Seeded initial demo traveler into database.");
         }
     }
     catch (Exception ex)

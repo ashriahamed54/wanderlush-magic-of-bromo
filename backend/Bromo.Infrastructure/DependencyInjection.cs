@@ -18,11 +18,27 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        // 1. PostgreSQL DbContext
-        var connectionString = BuildPostgreSqlConnectionString(configuration);
+        // 1. Database DbContext: PostgreSQL on Railway/Cloud, SQLite for smooth local development
+        var envDbUrl = configuration["DATABASE_URL"] 
+            ?? configuration["DATABASE_PUBLIC_URL"] 
+            ?? Environment.GetEnvironmentVariable("DATABASE_URL")
+            ?? Environment.GetEnvironmentVariable("DATABASE_PUBLIC_URL");
 
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseNpgsql(connectionString, b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+        var configuredConn = configuration.GetConnectionString("DefaultConnection");
+        bool hasPostgresConfig = !string.IsNullOrWhiteSpace(envDbUrl) || 
+            (!string.IsNullOrWhiteSpace(configuredConn) && !configuredConn.Contains("your_secure_password"));
+
+        if (hasPostgresConfig)
+        {
+            var connectionString = BuildPostgreSqlConnectionString(configuration);
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(connectionString, b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+        }
+        else
+        {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlite("Data Source=bromo_wanderlush.db", b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+        }
 
         services.AddScoped<IApplicationDbContext>(provider =>
             provider.GetRequiredService<ApplicationDbContext>());
@@ -30,10 +46,10 @@ public static class DependencyInjection
         // 2. JWT Configuration
         var jwtSection = configuration.GetSection(JwtSettings.SectionName);
         services.Configure<JwtSettings>(jwtSection);
-        var jwtSettings = jwtSection.Get<JwtSettings>() ?? new JwtSettings
-        {
-            SecretKey = "WanderlushSuperSecretJwtKeyForBromoExplorations2026!#"
-        };
+        var jwtSettings = jwtSection.Get<JwtSettings>() ?? new JwtSettings();
+        var secretKey = !string.IsNullOrWhiteSpace(jwtSettings.SecretKey) 
+            ? jwtSettings.SecretKey 
+            : "WanderlushSuperSecretJwtKeyForBromoExplorations2026!#RequiresAtLeast256BitsLength";
 
         services.AddAuthentication(options =>
         {
@@ -47,13 +63,11 @@ public static class DependencyInjection
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
-                ValidateIssuer = !string.IsNullOrWhiteSpace(jwtSettings.Issuer),
-                ValidIssuer = jwtSettings.Issuer,
-                ValidateAudience = !string.IsNullOrWhiteSpace(jwtSettings.Audience),
-                ValidAudience = jwtSettings.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+                ValidateIssuer = false,
+                ValidateAudience = false,
                 ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
+                ClockSkew = TimeSpan.FromMinutes(5)
             };
         });
 

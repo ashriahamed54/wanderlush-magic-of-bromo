@@ -37,6 +37,15 @@ public class JwtMiddleware
                 if (user != null)
                 {
                     context.Items["User"] = user;
+                    var claims = new System.Collections.Generic.List<System.Security.Claims.Claim>
+                    {
+                        new(System.Security.Claims.ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new(System.Security.Claims.ClaimTypes.Email, user.Email),
+                        new(System.Security.Claims.ClaimTypes.Name, user.FullName),
+                        new(System.Security.Claims.ClaimTypes.Role, user.Role.ToString())
+                    };
+                    var identity = new System.Security.Claims.ClaimsIdentity(claims, "Bearer");
+                    context.User = new System.Security.Claims.ClaimsPrincipal(identity);
                 }
             }
         }
