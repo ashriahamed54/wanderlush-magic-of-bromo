@@ -111,6 +111,25 @@ using (var scope = app.Services.CreateScope())
         {
             logger.LogInformation("Successfully connected to PostgreSQL database.");
             db.Database.EnsureCreated();
+
+            if (!db.Users.Any())
+            {
+                var hasher = scope.ServiceProvider.GetRequiredService<Bromo.Application.Common.Interfaces.IPasswordHasher>();
+                db.Users.Add(new Bromo.Domain.Entities.User
+                {
+                    Id = Guid.Parse("a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d"),
+                    FullName = "Aris Prasetyo",
+                    Email = "aris.traveler@wanderlush.com",
+                    PasswordHash = hasher.HashPassword("Bromo2026!"),
+                    PhoneNumber = "+62 812-3456-7890",
+                    Bio = "Bromo caldera explorer, mountain photographer, and highland trekker.",
+                    AvatarUrl = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop",
+                    Role = Bromo.Domain.Enums.UserRole.Traveler,
+                    IsActive = true
+                });
+                db.SaveChanges();
+                logger.LogInformation("Seeded initial demo traveler into PostgreSQL.");
+            }
         }
         else
         {

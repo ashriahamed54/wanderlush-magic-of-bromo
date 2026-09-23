@@ -70,18 +70,36 @@ public static class DependencyInjection
 
     private static string BuildPostgreSqlConnectionString(IConfiguration configuration)
     {
-        var connStr = configuration.GetConnectionString("DefaultConnection")
-            ?? configuration["DATABASE_URL"]
-            ?? configuration["DATABASE_PUBLIC_URL"]
-            ?? "Host=localhost;Port=5432;Database=bromo_wanderlush_db;Username=postgres;Password=postgres;";
+        // 1. If DATABASE_URL or DATABASE_PUBLIC_URL is provided (e.g. Railway / Cloud Postgres), prioritize it!
+        var envDbUrl = configuration["DATABASE_URL"] 
+            ?? configuration["DATABASE_PUBLIC_URL"] 
+            ?? Environment.GetEnvironmentVariable("DATABASE_URL")
+            ?? Environment.GetEnvironmentVariable("DATABASE_PUBLIC_URL");
 
-        // Handle postgresql:// or postgres:// URI formats provided by Railway / cloud providers
-        if (connStr.StartsWith("postgres://", StringComparison.OrdinalIgnoreCase) ||
-            connStr.StartsWith("postgresql://", StringComparison.OrdinalIgnoreCase))
+        if (!string.IsNullOrWhiteSpace(envDbUrl))
+        {
+            return ParsePostgreSqlUrl(envDbUrl);
+        }
+
+        // 2. Otherwise check ConnectionStrings:DefaultConnection
+        var connStr = configuration.GetConnectionString("DefaultConnection");
+        if (!string.IsNullOrWhiteSpace(connStr) && !connStr.Contains("your_secure_password"))
+        {
+            return ParsePostgreSqlUrl(connStr);
+        }
+
+        // 3. Fallback for local development
+        return "Host=localhost;Port=5432;Database=bromo_wanderlush_db;Username=postgres;Password=postgres;";
+    }
+
+    private static string ParsePostgreSqlUrl(string rawUrl)
+    {
+        if (rawUrl.StartsWith("postgres://", StringComparison.OrdinalIgnoreCase) ||
+            rawUrl.StartsWith("postgresql://", StringComparison.OrdinalIgnoreCase))
         {
             try
             {
-                var uri = new Uri(connStr);
+                var uri = new Uri(rawUrl);
                 var userInfo = uri.UserInfo.Split(':');
                 var username = userInfo.Length > 0 ? userInfo[0] : "postgres";
                 var password = userInfo.Length > 1 ? userInfo[1] : "";
@@ -91,10 +109,9 @@ public static class DependencyInjection
             }
             catch
             {
-                return connStr;
+                return rawUrl;
             }
         }
-
-        return connStr;
+        return rawUrl;
     }
 }
