@@ -28,7 +28,7 @@ graph TD
     end
     
     subgraph Database["Database"]
-        Postgres[("PostgreSQL Database<br/>(DBeaver / Railway)")]
+        Postgres[("PostgreSQL Database<br/>(Railway)")]
     end
 
     Client --> HomePage
@@ -79,35 +79,30 @@ Ensure you have the following installed locally:
 - **Node.js**: v18.18+ or v20+ (`node -v`)
 - **.NET SDK**: .NET 8.0 or .NET 9.0 (`dotnet --version`)
 - **PostgreSQL**: 14, 15, or 16 (Local, Docker, or Railway Cloud DB)
-- **DBeaver**: Community or Enterprise ([Download DBeaver](https://dbeaver.io/))
 
 ---
 
-## 🗄️ Database Setup & Migration (DBeaver & PostgreSQL)
+## 🗄️ Database Setup & Migration (PostgreSQL & EF Core)
 
-### Step 1: Connect DBeaver to PostgreSQL
-1. Open **DBeaver** and click **New Database Connection** (Plug icon).
-2. Choose **PostgreSQL** and click **Next**.
-3. Fill in connection details:
-   - **Host**: `localhost` (or your remote database host)
-   - **Port**: `5432`
-   - **Database**: `postgres` (or `bromo_wanderlush_db`)
-   - **Username**: `postgres`
-   - **Password**: *Your PostgreSQL password*
-4. Click **Test Connection** (DBeaver will prompt to download drivers if needed) and click **Finish**.
+The application supports both **automated EF Core migrations** and direct SQL script execution.
 
-### Step 2: Create the Database
-Right-click your PostgreSQL connection in DBeaver -> **SQL Editor > New SQL Script**:
-```sql
-CREATE DATABASE bromo_wanderlush_db;
-```
-Press `Ctrl + Enter` to execute.
+### Option A: Automatic Setup (Recommended)
+When you start the C# backend (`Bromo.WebApi`), Entity Framework Core automatically runs `EnsureCreated()` on startup:
+1. Connects to the database specified in `appsettings.json` or `DATABASE_URL`.
+2. Creates the `users` table and indexes automatically.
+3. Automatically seeds the pre-configured demo user: `aris.traveler@wanderlush.com` (`Bromo2026!`).
 
-### Step 3: Run the Schema Migration Script
-1. Open the file [`backend/scripts/init_postgres.sql`](backend/scripts/init_postgres.sql) in DBeaver.
-2. Ensure active database is set to `bromo_wanderlush_db`.
-3. Press `Alt + X` (or click **Execute SQL Script**).
-4. This creates:
+### Option B: Manual SQL Setup (psql or Railway Query Console)
+If you prefer running the schema manually:
+1. Create the database:
+   ```sql
+   CREATE DATABASE bromo_wanderlush_db;
+   ```
+2. Execute the provided SQL script [`backend/scripts/init_postgres.sql`](backend/scripts/init_postgres.sql) via `psql` or Railway's built-in Query Console:
+   ```bash
+   psql -U postgres -d bromo_wanderlush_db -f backend/scripts/init_postgres.sql
+   ```
+3. This creates:
    - `users` table with UUID primary key and audit timestamps.
    - Case-insensitive unique index on `email`.
    - Automatic `updated_at_utc` trigger.
@@ -169,8 +164,7 @@ This project is pre-configured for 1-click deployment on [Railway](https://railw
 1. Log in to [Railway](https://railway.com/) and click **+ New Project**.
 2. Select **Provision PostgreSQL**.
 3. Once provisioned, click the PostgreSQL service, go to **Connect**, and copy the **`DATABASE_URL`** or **Public Connection URL**.
-4. *(Optional via DBeaver)*: Connect DBeaver using the public host, port, and credentials from Railway, then execute [`backend/scripts/init_postgres.sql`](backend/scripts/init_postgres.sql) to seed the database.
-   *(Note: The C# backend will also automatically run `EnsureCreated()` on boot if connected).*
+4. *(Automated Migration)*: The C# backend will automatically create tables and seed the demo user on first boot via EF Core. You can also run [`backend/scripts/init_postgres.sql`](backend/scripts/init_postgres.sql) in the Railway Query tab or via `psql` if desired.
 
 ### Step 2: Deploy C# Backend on Railway
 1. In the same Railway project, click **+ Create > GitHub Repo** and select this repository.
@@ -224,8 +218,7 @@ wanderlush---magic-of-bromo/
 │   ├── Bromo.Infrastructure/   # EF Core Npgsql, Auth, PasswordHasher
 │   ├── Bromo.WebApi/           # REST Controllers, JWT Middleware, Swagger
 │   └── scripts/
-│       ├── init_postgres.sql   # PostgreSQL table, trigger, & seed script
-│       └── DBeaver_PostgreSQL_Setup_Guide.md # Step-by-step DBeaver guide
+│       └── init_postgres.sql   # PostgreSQL table, trigger, & seed script
 ├── components/                 # Responsive UI components & modals
 │   ├── Navbar.tsx              # Navigation with auth status & mobile drawer
 │   ├── Hero.tsx                # Hero section with CTA & social links

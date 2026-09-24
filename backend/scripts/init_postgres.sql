@@ -1,6 +1,6 @@
 -- ==============================================================
 -- WANDERLUSH BROMO - POSTGRESQL DATABASE INITIALIZATION SCRIPT
--- Execute this script in DBeaver (or psql)
+-- Execute this script in PostgreSQL (psql or Railway Query Console)
 -- ==============================================================
 
 -- 1. Create extension for UUID generation (if not already enabled)
