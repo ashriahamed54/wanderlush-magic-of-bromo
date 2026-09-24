@@ -403,11 +403,11 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Tab Navigation Menu - Perfectly Centered */}
-        <div className="flex justify-center border-b border-neutral-800 mb-8 overflow-x-auto no-scrollbar gap-2 sm:gap-6">
+        {/* Tab Navigation Menu - Perfectly Centered on Desktop, Scrollable from Start on Mobile */}
+        <div className="flex justify-start sm:justify-center border-b border-neutral-800 mb-8 overflow-x-auto scrollbar-none gap-2 sm:gap-6 px-1 sm:px-0">
           <button
             onClick={() => setActiveTab('profile')}
-            className={`pb-3 px-3 text-xs sm:text-sm font-medium tracking-wide transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${
+            className={`shrink-0 pb-3 px-3 text-xs sm:text-sm font-medium tracking-wide transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${
               activeTab === 'profile'
                 ? 'border-amber-400 text-amber-400 font-semibold'
                 : 'border-transparent text-neutral-400 hover:text-white'
@@ -419,7 +419,7 @@ export default function ProfilePage() {
 
           <button
             onClick={() => setActiveTab('security')}
-            className={`pb-3 px-3 text-xs sm:text-sm font-medium tracking-wide transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${
+            className={`shrink-0 pb-3 px-3 text-xs sm:text-sm font-medium tracking-wide transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${
               activeTab === 'security'
                 ? 'border-amber-400 text-amber-400 font-semibold'
                 : 'border-transparent text-neutral-400 hover:text-white'
@@ -431,7 +431,7 @@ export default function ProfilePage() {
 
           <button
             onClick={() => setActiveTab('expeditions')}
-            className={`pb-3 px-3 text-xs sm:text-sm font-medium tracking-wide transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${
+            className={`shrink-0 pb-3 px-3 text-xs sm:text-sm font-medium tracking-wide transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${
               activeTab === 'expeditions'
                 ? 'border-amber-400 text-amber-400 font-semibold'
                 : 'border-transparent text-neutral-400 hover:text-white'
@@ -443,7 +443,7 @@ export default function ProfilePage() {
 
           <button
             onClick={() => setActiveTab('danger')}
-            className={`pb-3 px-3 text-xs sm:text-sm font-medium tracking-wide transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${
+            className={`shrink-0 pb-3 px-3 text-xs sm:text-sm font-medium tracking-wide transition-all border-b-2 flex items-center gap-2 whitespace-nowrap cursor-pointer ${
               activeTab === 'danger'
                 ? 'border-red-500 text-red-400 font-semibold'
                 : 'border-transparent text-neutral-400 hover:text-red-400'
