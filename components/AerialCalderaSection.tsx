@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { MountainSnow, Compass, Eye, Crosshair, ArrowUpRight, Sparkles } from 'lucide-react';
-import { motion } from 'motion/react';
 
 export interface VolcanoPeak {
   id: string;
@@ -69,12 +68,8 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
   return (
     <section className="w-full bg-white pb-16 sm:pb-24 lg:pb-28 px-4 sm:px-8 lg:px-12">
       <div className="max-w-7xl mx-auto">
-        {/* Main Aerial Card with Subtle Scroll Reveal */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        {/* Main Aerial Card */}
+        <div
           className="relative w-full h-[520px] sm:h-[580px] md:h-[660px] rounded-3xl overflow-hidden shadow-2xl bg-neutral-950 border border-neutral-800 select-none flex flex-col justify-between"
         >
           {/* Background Aerial Monochrome / Deep Contrast Caldera Image */}
@@ -83,16 +78,16 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
             alt="Aerial Topography of Mount Bromo and Tengger Caldera"
             fill
             sizes="100vw"
-            className="object-cover object-center filter contrast-125 brightness-95"
+            className="object-cover object-center"
             referrerPolicy="no-referrer"
           />
 
           {/* High atmospheric gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-black/65 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/70 pointer-events-none" />
 
           {/* Heading overlay top-left */}
           <div className="absolute top-5 left-5 sm:top-10 sm:left-10 lg:top-12 lg:left-12 z-20">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/90 text-[10px] sm:text-xs font-mono tracking-widest uppercase mb-2 shadow-sm">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-950/80 border border-white/20 text-white/90 text-[10px] sm:text-xs font-mono tracking-widest uppercase mb-2 shadow-sm">
               <Sparkles size={12} className="text-amber-400" />
               <span>INTERACTIVE TOPOGRAPHY</span>
             </div>
@@ -112,10 +107,10 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
             }}
           >
             <div
-              className={`px-3 py-1.5 rounded-full backdrop-blur-md border shadow-lg text-center transition-all ${
+              className={`px-3 py-1.5 rounded-full border shadow-lg text-center transition-all ${
                 activePeak.id === 'semeru'
                   ? 'bg-amber-400 text-neutral-950 border-amber-300 ring-2 ring-amber-300/60 scale-105 shadow-amber-400/30'
-                  : 'bg-black/60 hover:bg-black/80 border-white/25 text-white'
+                  : 'bg-black/80 hover:bg-black/95 border-white/25 text-white'
               }`}
             >
               <span
@@ -145,10 +140,10 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
             }}
           >
             <div
-              className={`px-3 py-1.5 rounded-full backdrop-blur-md border shadow-lg text-center transition-all ${
+              className={`px-3 py-1.5 rounded-full border shadow-lg text-center transition-all ${
                 activePeak.id === 'widodaren'
                   ? 'bg-amber-400 text-neutral-950 border-amber-300 ring-2 ring-amber-300/60 scale-105 shadow-amber-400/30'
-                  : 'bg-black/60 hover:bg-black/80 border-white/25 text-white'
+                  : 'bg-black/80 hover:bg-black/95 border-white/25 text-white'
               }`}
             >
               <span
@@ -178,10 +173,10 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
             }}
           >
             <div
-              className={`px-3 py-1.5 rounded-full backdrop-blur-md border shadow-lg text-center transition-all ${
+              className={`px-3 py-1.5 rounded-full border shadow-lg text-center transition-all ${
                 activePeak.id === 'bromo'
                   ? 'bg-amber-400 text-neutral-950 border-amber-300 ring-2 ring-amber-300/60 scale-105 shadow-amber-400/30'
-                  : 'bg-black/60 hover:bg-black/80 border-white/25 text-white'
+                  : 'bg-black/80 hover:bg-black/95 border-white/25 text-white'
               }`}
             >
               <span
@@ -218,7 +213,7 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
             }}
           >
             {/* Viewfinder Camera Border */}
-            <div className="relative w-full h-full rounded-2xl border-2 border-amber-400/80 shadow-2xl bg-amber-500/10 backdrop-blur-[2px] transition-all hover:border-amber-300 flex flex-col justify-end p-3 sm:p-4">
+            <div className="relative w-full h-full rounded-2xl border-2 border-amber-400/80 shadow-2xl bg-amber-500/10 transition-colors hover:border-amber-300 flex flex-col justify-end p-3 sm:p-4">
               {/* Corner focus brackets */}
               <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-amber-300" />
               <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-amber-300" />
@@ -226,7 +221,7 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
               <div className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-amber-300" />
 
               {/* Peak Tag Pill: Clean high-contrast typography */}
-              <div className="mx-auto px-3 py-1.5 rounded-full bg-neutral-950/85 backdrop-blur-md border border-amber-400/50 text-center shadow-lg">
+              <div className="mx-auto px-3 py-1.5 rounded-full bg-neutral-950/90 border border-amber-400/50 text-center shadow-lg">
                 <span className="block text-xs font-bold text-white tracking-wide">
                   {PEAKS[0].name}
                 </span>
@@ -247,10 +242,10 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
             }}
           >
             <div
-              className={`px-3 py-1.5 rounded-full backdrop-blur-md border shadow-lg text-center transition-all ${
+              className={`px-3 py-1.5 rounded-full border shadow-lg text-center transition-all ${
                 activePeak.id === 'batok'
                   ? 'bg-amber-400 text-neutral-950 border-amber-300 ring-2 ring-amber-300/60 scale-105 shadow-amber-400/30'
-                  : 'bg-black/60 border-white/25 text-white'
+                  : 'bg-black/80 border-white/25 text-white'
               }`}
             >
               <span
@@ -271,7 +266,7 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
           </div>
 
           {/* Active Peak Details Bar at Bottom (Desktop & Tablet) */}
-          <div className="hidden sm:block absolute bottom-6 left-6 lg:bottom-8 lg:left-8 z-20 max-w-sm p-4 rounded-2xl bg-black/80 backdrop-blur-xl border border-white/20 text-white shadow-2xl">
+          <div className="hidden sm:block absolute bottom-6 left-6 lg:bottom-8 lg:left-8 z-20 max-w-sm p-4 rounded-2xl bg-black/90 border border-white/20 text-white shadow-2xl">
             <div className="flex items-center gap-2 mb-1.5">
               <MountainSnow size={15} className="text-amber-400" />
               <span className="text-[11px] font-bold uppercase tracking-wider text-amber-400">
@@ -286,7 +281,7 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
             </p>
             <button
               onClick={() => onPeakSelect(activePeak)}
-              className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/25 text-white hover:text-amber-300 text-[11px] font-semibold transition-all cursor-pointer shadow-sm"
+              className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/25 text-white hover:text-amber-300 text-[11px] font-semibold transition-colors cursor-pointer shadow-sm"
             >
               <Crosshair size={13} className="text-amber-400" />
               <span>Explore 360° viewpoint</span>
@@ -295,7 +290,7 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
           </div>
 
           {/* Mobile Bottom Responsive Peak Switcher Bar (< 640px) */}
-          <div className="sm:hidden relative z-20 p-3.5 bg-black/90 backdrop-blur-xl border-t border-white/15 space-y-3 mt-auto">
+          <div className="sm:hidden relative z-20 p-3.5 bg-neutral-950 border-t border-white/15 space-y-3 mt-auto">
             {/* Quick selector chips */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
               {PEAKS.map((p) => {
@@ -336,7 +331,7 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
               </button>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

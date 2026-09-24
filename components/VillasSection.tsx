@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { Star, MapPin, CalendarDays, CircleDollarSign, UsersRound, ChevronDown, Search, Sparkles, Building2 } from 'lucide-react';
-import { motion } from 'motion/react';
 
 export interface VillaItem {
   id: string;
@@ -141,12 +140,8 @@ export default function VillasSection({ onVillaSelect, onSearchSubmit }: VillasS
   return (
     <section id="services" className="w-full bg-white py-16 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
       <div className="max-w-7xl mx-auto">
-        {/* Title with Scroll Reveal */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        {/* Title */}
+        <div
           className="text-center max-w-3xl mx-auto mb-8 sm:mb-12"
         >
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 text-neutral-600 text-[10px] sm:text-xs font-mono uppercase tracking-wider mb-3">
@@ -157,14 +152,10 @@ export default function VillasSection({ onVillaSelect, onSearchSubmit }: VillasS
             A Selection Of Exceptional <br className="hidden sm:inline" />
             Villas And Hotels
           </h2>
-        </motion.div>
+        </div>
 
-        {/* Search / Filter Bar with Scroll Reveal */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        {/* Search / Filter Bar */}
+        <div
           ref={filterRef}
           className="max-w-3xl mx-auto mb-8 relative z-30"
         >
@@ -414,14 +405,10 @@ export default function VillasSection({ onVillaSelect, onSearchSubmit }: VillasS
               <Search size={14} className="text-amber-400" />
             </button>
           </div>
-        </motion.div>
+        </div>
 
         {/* Category Pills with smooth horizontal scrolling */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.45 }}
+        <div
           className="relative mb-10 sm:mb-12"
         >
           <div className="flex items-center justify-start md:justify-center gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-none">
@@ -443,20 +430,16 @@ export default function VillasSection({ onVillaSelect, onSearchSubmit }: VillasS
               );
             })}
           </div>
-        </motion.div>
+        </div>
 
-        {/* Villa Cards Grid: Adapts cleanly on Tablet (2 cols) & Desktop (3 cols) with staggered scroll reveal */}
+        {/* Villa Cards Grid: Adapts cleanly on Tablet (2 cols) & Desktop (3 cols) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
-          {filteredVillas.map((villa, idx) => (
-            <motion.div
+          {filteredVillas.map((villa) => (
+            <div
               key={villa.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
               id={`villa-card-${villa.id}`}
               onClick={() => onVillaSelect(villa)}
-              className="relative h-[380px] sm:h-[400px] lg:h-[420px] rounded-3xl overflow-hidden cursor-pointer group shadow-sm hover:shadow-2xl active:scale-[0.99] transition-all duration-500"
+              className="relative h-[380px] sm:h-[400px] lg:h-[420px] rounded-3xl overflow-hidden cursor-pointer group shadow-sm hover:shadow-2xl active:scale-[0.99] transition-shadow duration-300"
             >
               {/* Image */}
               <Image
@@ -472,13 +455,13 @@ export default function VillasSection({ onVillaSelect, onSearchSubmit }: VillasS
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/30" />
 
               {/* Star Rating Badge top right */}
-              <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-xs font-semibold shadow-md">
+              <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/70 border border-white/20 text-white text-xs font-semibold shadow-md">
                 <Star size={13} className="text-amber-400 fill-amber-400" />
                 <span>{villa.rating.toFixed(1)}</span>
               </div>
 
               {/* Bottom Info Bar Overlay */}
-              <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 right-3.5 sm:right-4 z-10 p-4 sm:p-5 rounded-2xl bg-black/75 backdrop-blur-md border border-white/15 flex items-center justify-between text-white shadow-xl">
+              <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 right-3.5 sm:right-4 z-10 p-4 sm:p-5 rounded-2xl bg-black/85 border border-white/15 flex items-center justify-between text-white shadow-xl">
                 <div className="pr-2 truncate">
                   <h3 className="text-base sm:text-lg font-bold tracking-tight text-white mb-0.5 truncate">
                     {villa.name}
@@ -498,7 +481,7 @@ export default function VillasSection({ onVillaSelect, onSearchSubmit }: VillasS
                   </span>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

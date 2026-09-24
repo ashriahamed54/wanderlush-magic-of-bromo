@@ -3,7 +3,6 @@
 import React from 'react';
 import Image from 'next/image';
 import { Bell, ArrowUpRight, BookOpen, Clock, CalendarDays } from 'lucide-react';
-import { motion } from 'motion/react';
 
 export interface BlogPost {
   id: string;
@@ -84,12 +83,8 @@ export default function BlogSection({
   return (
     <section id="about" className="w-full bg-white py-16 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12 border-t border-neutral-100">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header with Scroll Reveal */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        {/* Section Header */}
+        <div
           className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 sm:gap-8 mb-10 sm:mb-14 lg:mb-16"
         >
           <div>
@@ -126,22 +121,18 @@ export default function BlogSection({
               </button>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Blog Grid: 1 Large Left Card + 2 Stacked/Grid Right Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
-          {/* Featured Large Card (Left ~60% on desktop) with Scroll Reveal */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          {/* Featured Large Card (Left ~60% on desktop) */}
+          <div
             id="blog-card-featured"
             onClick={() => onPostSelect(featuredPost)}
             className="lg:col-span-7 group cursor-pointer active:scale-[0.99] transition-transform"
           >
             {/* Image Container */}
-            <div className="relative w-full h-[260px] sm:h-[360px] lg:h-[440px] rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 mb-4 sm:mb-5">
+            <div className="relative w-full h-[260px] sm:h-[360px] lg:h-[440px] rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-shadow duration-300 mb-4 sm:mb-5">
               <Image
                 src={featuredPost.image}
                 alt={featuredPost.title}
@@ -150,7 +141,7 @@ export default function BlogSection({
                 className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-[11px] font-medium flex items-center gap-1.5 shadow-sm">
+              <div className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-black/75 border border-white/20 text-white text-[11px] font-medium flex items-center gap-1.5 shadow-sm">
                 <Clock size={12} className="text-amber-300" />
                 <span>{featuredPost.readTime}</span>
               </div>
@@ -163,7 +154,7 @@ export default function BlogSection({
               </span>
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-neutral-900 tracking-tight group-hover:text-amber-700 transition-colors mb-3 sm:mb-4 flex items-center justify-between gap-2">
                 <span>{featuredPost.title}</span>
-                <ArrowUpRight size={18} className="text-neutral-400 group-hover:text-amber-700 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
+                <ArrowUpRight size={18} className="text-neutral-400 group-hover:text-amber-700 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
               </h3>
 
               {/* Author footer */}
@@ -190,21 +181,17 @@ export default function BlogSection({
                 </div>
               )}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Right Stacked Cards (On Tablet sm: grid-cols-2, on Desktop lg: flex-col) with Scroll Reveal */}
+          {/* Right Stacked Cards (On Tablet sm: grid-cols-2, on Desktop lg: flex-col) */}
           <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6 sm:gap-7">
             {/* Top Card: The Beauty of the Sea of Sand */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            <div
               id="blog-card-sea-of-sand"
               onClick={() => onPostSelect(post2)}
               className="group cursor-pointer active:scale-[0.99] transition-transform"
             >
-              <div className="relative w-full h-[200px] sm:h-[220px] lg:h-[230px] rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 mb-3">
+              <div className="relative w-full h-[200px] sm:h-[220px] lg:h-[230px] rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-shadow duration-300 mb-3">
                 <Image
                   src={post2.image}
                   alt={post2.title}
@@ -213,7 +200,7 @@ export default function BlogSection({
                   className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute top-3.5 left-3.5 z-10 px-2.5 py-0.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-[10px] font-medium flex items-center gap-1 shadow-sm">
+                <div className="absolute top-3.5 left-3.5 z-10 px-2.5 py-0.5 rounded-full bg-black/75 border border-white/20 text-white text-[10px] font-medium flex items-center gap-1 shadow-sm">
                   <Clock size={11} className="text-amber-300" />
                   <span>{post2.readTime}</span>
                 </div>
@@ -223,21 +210,17 @@ export default function BlogSection({
               </span>
               <h3 className="text-base sm:text-lg lg:text-xl font-bold text-neutral-900 tracking-tight group-hover:text-amber-700 transition-colors flex items-center justify-between gap-1.5">
                 <span>{post2.title}</span>
-                <ArrowUpRight size={16} className="text-neutral-400 group-hover:text-amber-700 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
+                <ArrowUpRight size={16} className="text-neutral-400 group-hover:text-amber-700 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
               </h3>
-            </motion.div>
+            </div>
 
             {/* Bottom Card: Sunrise in Bromo Tengger Semeru */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            <div
               id="blog-card-sunrise-bromo"
               onClick={() => onPostSelect(post3)}
               className="group cursor-pointer active:scale-[0.99] transition-transform"
             >
-              <div className="relative w-full h-[200px] sm:h-[220px] lg:h-[230px] rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 mb-3">
+              <div className="relative w-full h-[200px] sm:h-[220px] lg:h-[230px] rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-shadow duration-300 mb-3">
                 <Image
                   src={post3.image}
                   alt={post3.title}
@@ -246,7 +229,7 @@ export default function BlogSection({
                   className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute top-3.5 left-3.5 z-10 px-2.5 py-0.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-[10px] font-medium flex items-center gap-1 shadow-sm">
+                <div className="absolute top-3.5 left-3.5 z-10 px-2.5 py-0.5 rounded-full bg-black/75 border border-white/20 text-white text-[10px] font-medium flex items-center gap-1 shadow-sm">
                   <Clock size={11} className="text-amber-300" />
                   <span>{post3.readTime}</span>
                 </div>
@@ -258,7 +241,7 @@ export default function BlogSection({
                 <span>{post3.title}</span>
                 <ArrowUpRight size={16} className="text-neutral-400 group-hover:text-amber-700 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
               </h3>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>

@@ -37,7 +37,7 @@ export default function Hero({ onScheduleClick, onExploreClick, onSocialClick }:
         <button
           id="hero-social-instagram"
           onClick={() => onSocialClick('Instagram')}
-          className="w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-white/15 hover:bg-white/30 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-md"
+          className="w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
           aria-label="Instagram"
         >
           <Instagram size={16} />
@@ -45,7 +45,7 @@ export default function Hero({ onScheduleClick, onExploreClick, onSocialClick }:
         <button
           id="hero-social-facebook"
           onClick={() => onSocialClick('Facebook')}
-          className="w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-white/15 hover:bg-white/30 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-md"
+          className="w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
           aria-label="Facebook"
         >
           <Facebook size={16} />
@@ -53,7 +53,7 @@ export default function Hero({ onScheduleClick, onExploreClick, onSocialClick }:
         <button
           id="hero-social-youtube"
           onClick={() => onSocialClick('YouTube')}
-          className="w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-white/15 hover:bg-white/30 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-md"
+          className="w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
           aria-label="YouTube"
         >
           <Youtube size={16} />
@@ -63,7 +63,7 @@ export default function Hero({ onScheduleClick, onExploreClick, onSocialClick }:
       {/* Upper Hero Typography - Clean, non-overlapping, positioned comfortably in the open dawn sky */}
       <div className="relative z-10 max-w-7xl mx-auto w-full pt-4 sm:pt-2 md:pt-4">
         {/* Tag Pill */}
-        <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-white/95 text-[10px] sm:text-xs md:text-sm font-medium tracking-wide w-fit mb-2.5 sm:mb-4 shadow-sm">
+        <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-black/50 border border-white/25 text-white/95 text-[10px] sm:text-xs md:text-sm font-medium tracking-wide w-fit mb-2.5 sm:mb-4 shadow-sm">
           <span>A Place Where Nature and Adventure Unite</span>
         </div>
 
@@ -78,7 +78,7 @@ export default function Hero({ onScheduleClick, onExploreClick, onSocialClick }:
           <button
             id="hero-schedule-btn-desktop"
             onClick={onScheduleClick}
-            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-neutral-900 font-semibold text-xs tracking-wider uppercase shadow-xl hover:bg-neutral-100 hover:shadow-2xl transition-all duration-300 transform active:scale-95 cursor-pointer"
+            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-neutral-900 font-semibold text-xs tracking-wider uppercase shadow-xl hover:bg-neutral-100 hover:shadow-2xl transition-all duration-200 transform active:scale-95 cursor-pointer"
           >
             <Calendar size={14} className="text-amber-600" />
             <span>Schedule</span>
@@ -109,21 +109,21 @@ export default function Hero({ onScheduleClick, onExploreClick, onSocialClick }:
             <div className="flex items-center gap-1.5 shrink-0">
               <button
                 onClick={() => onSocialClick('Instagram')}
-                className="w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-md border border-white/25 flex items-center justify-center text-white active:scale-90 transition-transform"
+                className="w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white active:scale-90 transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram size={15} />
               </button>
               <button
                 onClick={() => onSocialClick('Facebook')}
-                className="w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-md border border-white/25 flex items-center justify-center text-white active:scale-90 transition-transform"
+                className="w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white active:scale-90 transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook size={15} />
               </button>
               <button
                 onClick={() => onSocialClick('YouTube')}
-                className="w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-md border border-white/25 flex items-center justify-center text-white active:scale-90 transition-transform"
+                className="w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white active:scale-90 transition-colors"
                 aria-label="YouTube"
               >
                 <Youtube size={15} />
@@ -135,7 +135,7 @@ export default function Hero({ onScheduleClick, onExploreClick, onSocialClick }:
         {/* Feature Highlight Pills (Desktop & Mobile) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4 md:gap-6 max-w-3xl">
           {/* Feature 1 */}
-          <div className="flex items-center gap-3 sm:gap-4 px-3.5 sm:px-5 py-2 sm:py-3 rounded-2xl sm:rounded-full bg-black/45 hover:bg-black/60 backdrop-blur-md border border-white/15 text-white shadow-lg transition-colors">
+          <div className="flex items-center gap-3 sm:gap-4 px-3.5 sm:px-5 py-2 sm:py-3 rounded-2xl sm:rounded-full bg-black/60 hover:bg-black/75 border border-white/15 text-white shadow-lg transition-colors">
             <div className="w-7 sm:w-9 h-7 sm:h-9 rounded-full bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
               <Compass size={15} className="text-white" />
             </div>
@@ -145,7 +145,7 @@ export default function Hero({ onScheduleClick, onExploreClick, onSocialClick }:
           </div>
 
           {/* Feature 2 */}
-          <div className="flex items-center gap-3 sm:gap-4 px-3.5 sm:px-5 py-2 sm:py-3 rounded-2xl sm:rounded-full bg-black/45 hover:bg-black/60 backdrop-blur-md border border-white/15 text-white shadow-lg transition-colors">
+          <div className="flex items-center gap-3 sm:gap-4 px-3.5 sm:px-5 py-2 sm:py-3 rounded-2xl sm:rounded-full bg-black/60 hover:bg-black/75 border border-white/15 text-white shadow-lg transition-colors">
             <div className="w-7 sm:w-9 h-7 sm:h-9 rounded-full bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
               <ShieldCheck size={15} className="text-white" />
             </div>

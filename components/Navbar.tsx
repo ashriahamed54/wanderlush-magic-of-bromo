@@ -50,10 +50,10 @@ export default function Navbar({ onScheduleClick }: NavbarProps) {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-40 transition-[padding,background-color,border-color] duration-300 ${
           scrolled
-            ? 'py-3.5 sm:py-4 bg-neutral-950/90 backdrop-blur-xl border-b border-white/10 shadow-2xl'
-            : 'py-5 sm:py-7 bg-gradient-to-b from-black/60 to-transparent'
+            ? 'py-3.5 sm:py-4 bg-neutral-950/95 border-b border-white/10 shadow-2xl'
+            : 'py-5 sm:py-7 bg-gradient-to-b from-black/70 to-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 flex items-center justify-between">
@@ -88,7 +88,7 @@ export default function Navbar({ onScheduleClick }: NavbarProps) {
                 <Link
                   href="/profile"
                   id="nav-profile-btn"
-                  className="flex items-center gap-2.5 h-10 pl-2.5 pr-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-white text-xs font-semibold tracking-wider transition-all backdrop-blur-md active:scale-95 group cursor-pointer"
+                  className="flex items-center gap-2.5 h-10 pl-2.5 pr-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-white text-xs font-semibold tracking-wider transition-colors active:scale-95 group cursor-pointer"
                 >
                   <div className="w-6 h-6 rounded-full bg-amber-400 text-neutral-950 font-bold text-[11px] flex items-center justify-center">
                     {user.fullName.charAt(0).toUpperCase()}
@@ -108,7 +108,7 @@ export default function Navbar({ onScheduleClick }: NavbarProps) {
               <button
                 id="nav-signin-btn"
                 onClick={() => openAuthModal('login')}
-                className="h-10 px-5 rounded-full text-xs font-semibold tracking-wider text-white hover:text-neutral-950 bg-white/10 hover:bg-white border border-white/25 transition-all duration-300 backdrop-blur-md cursor-pointer flex items-center gap-2 shadow-sm active:scale-95"
+                className="h-10 px-5 rounded-full text-xs font-semibold tracking-wider text-white hover:text-neutral-950 bg-white/10 hover:bg-white border border-white/25 transition-colors duration-200 cursor-pointer flex items-center gap-2 shadow-sm active:scale-95"
               >
                 <User size={14} className="text-amber-400" />
                 <span>Sign In</span>
@@ -122,7 +122,7 @@ export default function Navbar({ onScheduleClick }: NavbarProps) {
               <Link
                 href="/profile"
                 id="nav-mobile-profile-btn"
-                className="flex items-center gap-2 h-10 pl-2 pr-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-white active:scale-95 transition-all backdrop-blur-md"
+                className="flex items-center gap-2 h-10 pl-2 pr-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-white active:scale-95 transition-colors"
                 aria-label="View Profile"
               >
                 <div className="w-6 h-6 rounded-full bg-amber-400 text-neutral-950 font-bold text-xs flex items-center justify-center shrink-0">
@@ -136,7 +136,7 @@ export default function Navbar({ onScheduleClick }: NavbarProps) {
               <button
                 id="nav-mobile-signin-btn"
                 onClick={() => openAuthModal('login')}
-                className="h-10 px-4 rounded-full text-xs font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/25 active:scale-95 transition-all backdrop-blur-md flex items-center justify-center gap-1.5 whitespace-nowrap shadow-sm cursor-pointer"
+                className="h-10 px-4 rounded-full text-xs font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/25 active:scale-95 transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap shadow-sm cursor-pointer"
               >
                 <User size={13} className="text-amber-400" />
                 <span>Sign In</span>
@@ -146,7 +146,7 @@ export default function Navbar({ onScheduleClick }: NavbarProps) {
             <button
               id="nav-mobile-toggle-btn"
               onClick={() => setMobileMenuOpen(true)}
-              className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white backdrop-blur-md active:scale-90 transition-all cursor-pointer shrink-0"
+              className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white active:scale-90 transition-colors cursor-pointer shrink-0"
               aria-label="Open navigation menu"
             >
               <Menu size={18} />
@@ -157,7 +157,7 @@ export default function Navbar({ onScheduleClick }: NavbarProps) {
 
       {/* Mature Mobile & Tablet Drawer Modal */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden bg-neutral-950/98 backdrop-blur-2xl flex flex-col justify-between p-6 sm:p-10 animate-in fade-in duration-300">
+        <div className="fixed inset-0 z-50 lg:hidden bg-neutral-950/98 flex flex-col justify-between p-6 sm:p-10 animate-in fade-in duration-200">
           {/* Drawer Header */}
           <div className="flex items-center justify-between pb-6 border-b border-white/10">
             <div>
