@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Calendar, ArrowRight, Compass, ShieldCheck, Instagram, Facebook, Youtube } from 'lucide-react';
+import Reveal from './Reveal';
 
 interface HeroProps {
   onScheduleClick: () => void;
@@ -33,58 +34,68 @@ export default function Hero({ onScheduleClick, onExploreClick, onSocialClick }:
       </div>
 
       {/* Floating Right Social Media Icons (Desktop & Tablet: sm+) */}
-      <div className="hidden sm:flex absolute right-4 sm:right-6 lg:right-10 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-3">
-        <button
-          id="hero-social-instagram"
-          onClick={() => onSocialClick('Instagram')}
-          className="w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
-          aria-label="Instagram"
-        >
-          <Instagram size={16} />
-        </button>
-        <button
-          id="hero-social-facebook"
-          onClick={() => onSocialClick('Facebook')}
-          className="w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
-          aria-label="Facebook"
-        >
-          <Facebook size={16} />
-        </button>
-        <button
-          id="hero-social-youtube"
-          onClick={() => onSocialClick('YouTube')}
-          className="w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
-          aria-label="YouTube"
-        >
-          <Youtube size={16} />
-        </button>
+      <div className="hidden sm:flex absolute right-4 sm:right-6 lg:right-10 top-1/2 -translate-y-1/2 z-20">
+        <Reveal delay={450} yOffset={0}>
+          <div className="flex flex-col items-center gap-3">
+            <button
+              id="hero-social-instagram"
+              onClick={() => onSocialClick('Instagram')}
+              className="w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
+              aria-label="Instagram"
+            >
+              <Instagram size={16} />
+            </button>
+            <button
+              id="hero-social-facebook"
+              onClick={() => onSocialClick('Facebook')}
+              className="w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
+              aria-label="Facebook"
+            >
+              <Facebook size={16} />
+            </button>
+            <button
+              id="hero-social-youtube"
+              onClick={() => onSocialClick('YouTube')}
+              className="w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white transition-colors duration-200 active:scale-95 cursor-pointer shadow-md"
+              aria-label="YouTube"
+            >
+              <Youtube size={16} />
+            </button>
+          </div>
+        </Reveal>
       </div>
 
       {/* Upper Hero Typography - Clean, non-overlapping, positioned comfortably in the open dawn sky */}
       <div className="relative z-10 max-w-7xl mx-auto w-full pt-4 sm:pt-2 md:pt-4">
         {/* Tag Pill */}
-        <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-black/50 border border-white/25 text-white/95 text-[10px] sm:text-xs md:text-sm font-medium tracking-wide w-fit mb-2.5 sm:mb-4 shadow-sm">
-          <span>A Place Where Nature and Adventure Unite</span>
-        </div>
+        <Reveal delay={80} yOffset={16}>
+          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-black/50 border border-white/25 text-white/95 text-[10px] sm:text-xs md:text-sm font-medium tracking-wide w-fit mb-2.5 sm:mb-4 shadow-sm">
+            <span>A Place Where Nature and Adventure Unite</span>
+          </div>
+        </Reveal>
 
         {/* Hero Title - Adjusted desktop scale and comfortable mobile placement */}
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-white leading-[1.15] sm:leading-[1.1] max-w-3xl drop-shadow-xl">
-          Experience the <br />
-          <span className="text-white">Magic of Bromo</span>
-        </h1>
+        <Reveal delay={180} yOffset={22}>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-white leading-[1.15] sm:leading-[1.1] max-w-3xl drop-shadow-xl">
+            Experience the <br />
+            <span className="text-white">Magic of Bromo</span>
+          </h1>
+        </Reveal>
 
         {/* Desktop / Tablet CTA Button (Schedule button) */}
-        <div className="hidden sm:inline-flex items-center mt-5 md:mt-6">
-          <button
-            id="hero-schedule-btn-desktop"
-            onClick={onScheduleClick}
-            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-neutral-900 font-semibold text-xs tracking-wider uppercase shadow-xl hover:bg-neutral-100 hover:shadow-2xl transition-all duration-200 transform active:scale-95 cursor-pointer"
-          >
-            <Calendar size={14} className="text-amber-600" />
-            <span>Schedule</span>
-            <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-          </button>
-        </div>
+        <Reveal delay={280} yOffset={16}>
+          <div className="hidden sm:inline-flex items-center mt-5 md:mt-6">
+            <button
+              id="hero-schedule-btn-desktop"
+              onClick={onScheduleClick}
+              className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-neutral-900 font-semibold text-xs tracking-wider uppercase shadow-xl hover:bg-neutral-100 hover:shadow-2xl transition-all duration-200 transform active:scale-95 cursor-pointer"
+            >
+              <Calendar size={14} className="text-amber-600" />
+              <span>Schedule</span>
+              <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+            </button>
+          </div>
+        </Reveal>
       </div>
 
       {/* Middle Spacer Area: Keeps the entire caldera scenery, Mount Batok cone, and smoking Bromo crater 100% visible and unobstructed */}
@@ -92,68 +103,70 @@ export default function Hero({ onScheduleClick, onExploreClick, onSocialClick }:
 
       {/* Bottom Controls Area */}
       <div className="relative z-20 max-w-7xl mx-auto w-full space-y-4 sm:space-y-6">
-        {/* Mobile-Only Bottom Controls: Schedule Button + Social Media Icons in Bottom */}
-        <div className="sm:hidden flex flex-col gap-3.5 w-full">
-          {/* Mobile Bottom Action Row */}
-          <div className="flex items-center gap-2.5 w-full">
-            <button
-              id="hero-schedule-btn-mobile"
-              onClick={onScheduleClick}
-              className="flex-1 py-2.5 px-4 rounded-full bg-white text-neutral-950 font-bold text-xs tracking-wider uppercase shadow-xl active:scale-95 transition-transform flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <Calendar size={14} className="text-amber-600" />
-              <span>Schedule</span>
-            </button>
+        <Reveal delay={380} yOffset={20}>
+          {/* Mobile-Only Bottom Controls: Schedule Button + Social Media Icons in Bottom */}
+          <div className="sm:hidden flex flex-col gap-3.5 w-full mb-3 sm:mb-0">
+            {/* Mobile Bottom Action Row */}
+            <div className="flex items-center gap-2.5 w-full">
+              <button
+                id="hero-schedule-btn-mobile"
+                onClick={onScheduleClick}
+                className="flex-1 py-2.5 px-4 rounded-full bg-white text-neutral-950 font-bold text-xs tracking-wider uppercase shadow-xl active:scale-95 transition-transform flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Calendar size={14} className="text-amber-600" />
+                <span>Schedule</span>
+              </button>
 
-            {/* Mobile Social Media Icons at the bottom */}
-            <div className="flex items-center gap-1.5 shrink-0">
-              <button
-                onClick={() => onSocialClick('Instagram')}
-                className="w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white active:scale-90 transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram size={15} />
-              </button>
-              <button
-                onClick={() => onSocialClick('Facebook')}
-                className="w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white active:scale-90 transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook size={15} />
-              </button>
-              <button
-                onClick={() => onSocialClick('YouTube')}
-                className="w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white active:scale-90 transition-colors"
-                aria-label="YouTube"
-              >
-                <Youtube size={15} />
-              </button>
+              {/* Mobile Social Media Icons at the bottom */}
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button
+                  onClick={() => onSocialClick('Instagram')}
+                  className="w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white active:scale-90 transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram size={15} />
+                </button>
+                <button
+                  onClick={() => onSocialClick('Facebook')}
+                  className="w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white active:scale-90 transition-colors"
+                  aria-label="Facebook"
+                >
+                  <Facebook size={15} />
+                </button>
+                <button
+                  onClick={() => onSocialClick('YouTube')}
+                  className="w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 border border-white/25 flex items-center justify-center text-white active:scale-90 transition-colors"
+                  aria-label="YouTube"
+                >
+                  <Youtube size={15} />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Feature Highlight Pills (Desktop & Mobile) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4 md:gap-6 max-w-3xl">
-          {/* Feature 1 */}
-          <div className="flex items-center gap-3 sm:gap-4 px-3.5 sm:px-5 py-2 sm:py-3 rounded-2xl sm:rounded-full bg-black/60 hover:bg-black/75 border border-white/15 text-white shadow-lg transition-colors">
-            <div className="w-7 sm:w-9 h-7 sm:h-9 rounded-full bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
-              <Compass size={15} className="text-white" />
+          {/* Feature Highlight Pills (Desktop & Mobile) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4 md:gap-6 max-w-3xl">
+            {/* Feature 1 */}
+            <div className="flex items-center gap-3 sm:gap-4 px-3.5 sm:px-5 py-2 sm:py-3 rounded-2xl sm:rounded-full bg-black/60 hover:bg-black/75 border border-white/15 text-white shadow-lg transition-colors">
+              <div className="w-7 sm:w-9 h-7 sm:h-9 rounded-full bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
+                <Compass size={15} className="text-white" />
+              </div>
+              <p className="text-[10px] sm:text-xs md:text-[12px] text-white/90 leading-snug font-normal">
+                Provides a visual representation of destinations, attractions, and activities.
+              </p>
             </div>
-            <p className="text-[10px] sm:text-xs md:text-[12px] text-white/90 leading-snug font-normal">
-              Provides a visual representation of destinations, attractions, and activities.
-            </p>
-          </div>
 
-          {/* Feature 2 */}
-          <div className="flex items-center gap-3 sm:gap-4 px-3.5 sm:px-5 py-2 sm:py-3 rounded-2xl sm:rounded-full bg-black/60 hover:bg-black/75 border border-white/15 text-white shadow-lg transition-colors">
-            <div className="w-7 sm:w-9 h-7 sm:h-9 rounded-full bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
-              <ShieldCheck size={15} className="text-white" />
+            {/* Feature 2 */}
+            <div className="flex items-center gap-3 sm:gap-4 px-3.5 sm:px-5 py-2 sm:py-3 rounded-2xl sm:rounded-full bg-black/60 hover:bg-black/75 border border-white/15 text-white shadow-lg transition-colors">
+              <div className="w-7 sm:w-9 h-7 sm:h-9 rounded-full bg-white/20 border border-white/30 flex items-center justify-center shrink-0">
+                <ShieldCheck size={15} className="text-white" />
+              </div>
+              <p className="text-[10px] sm:text-xs md:text-[12px] text-white/90 leading-snug font-normal">
+                Provides travelers with more accurate and reliable perspective of the destination.
+              </p>
             </div>
-            <p className="text-[10px] sm:text-xs md:text-[12px] text-white/90 leading-snug font-normal">
-              Provides travelers with more accurate and reliable perspective of the destination.
-            </p>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
