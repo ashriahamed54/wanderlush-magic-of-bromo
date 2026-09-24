@@ -155,137 +155,106 @@ export default function Navbar({ onScheduleClick }: NavbarProps) {
         </div>
       </nav>
 
-      {/* Mature Mobile & Tablet Drawer Modal */}
+      {/* Clean Luxury Mobile & Tablet Drawer Modal */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden bg-neutral-950/98 flex flex-col justify-between p-6 sm:p-10 animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 lg:hidden bg-neutral-950/98 flex flex-col justify-between p-6 sm:p-8 animate-in fade-in duration-200 overflow-y-auto">
           {/* Drawer Header */}
-          <div className="flex items-center justify-between pb-6 border-b border-white/10">
-            <div>
-              <span className="text-white font-extrabold text-xl tracking-[0.22em] uppercase">
-                WANDERLUSH
-              </span>
-              <span className="block text-[10px] text-amber-400 font-mono tracking-wider mt-0.5">
-                BROMO EXPEDITIONS DESK
-              </span>
-            </div>
+          <div className="flex items-center justify-between pb-5 border-b border-white/10">
+            <a
+              href="#home"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-white font-extrabold text-xl tracking-[0.22em] uppercase"
+            >
+              WANDERLUSH
+            </a>
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white transition-colors"
+              className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white transition-colors cursor-pointer"
               aria-label="Close navigation menu"
             >
-              <X size={20} />
+              <X size={18} />
             </button>
           </div>
 
-          {/* Navigation Links with large mature touch typography */}
-          <div className="py-8 flex flex-col space-y-4 sm:space-y-6">
-            {navLinks.map((link, idx) => (
+          {/* Navigation Links */}
+          <div className="py-6 flex flex-col space-y-1">
+            {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="group flex items-center justify-between py-2 text-2xl font-bold tracking-tight text-white hover:text-amber-400 transition-colors"
+                className="group flex items-center justify-between py-3.5 text-lg font-medium tracking-widest text-white/80 hover:text-white border-b border-white/5 transition-colors"
               >
-                <div className="flex items-baseline gap-3">
-                  <span className="text-xs font-mono text-neutral-500 font-normal">
-                    0{idx + 1}
-                  </span>
-                  <span>{link.label}</span>
-                </div>
-                <ArrowUpRight size={18} className="text-neutral-600 group-hover:text-amber-400 transition-colors" />
+                <span>{link.label}</span>
+                <ArrowUpRight size={16} className="text-white/30 group-hover:text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
               </a>
             ))}
           </div>
 
-          {/* Drawer Bottom Info & Direct CTA */}
-          <div className="space-y-4 pt-6 border-t border-white/10">
-            {/* User Account / Passport in Drawer */}
+          {/* Drawer Bottom Actions */}
+          <div className="space-y-3 pt-5 border-t border-white/10">
+            {/* User Account / Sign In */}
             {user ? (
-              <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-amber-400 text-neutral-950 font-bold text-xs flex items-center justify-center">
+              <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
+                <Link
+                  href="/profile"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-3 min-w-0"
+                >
+                  <div className="w-8 h-8 rounded-full bg-amber-400 text-neutral-950 font-bold text-xs flex items-center justify-center shrink-0">
                     {user.fullName.charAt(0).toUpperCase()}
                   </div>
-                  <div>
-                    <span className="block text-xs font-bold text-white leading-tight">{user.fullName}</span>
-                    <span className="block text-[10px] text-amber-400 font-mono">{user.role}</span>
+                  <div className="min-w-0">
+                    <span className="block text-xs font-semibold text-white truncate">{user.fullName}</span>
+                    <span className="block text-[11px] text-white/50">View Account</span>
                   </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Link
-                    href="/profile"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="px-3 py-1.5 rounded-lg bg-amber-400 text-neutral-950 font-bold text-xs"
-                  >
-                    Profile
-                  </Link>
-                  <button
-                    onClick={() => {
-                      logout();
-                      setMobileMenuOpen(false);
-                    }}
-                    className="p-1.5 rounded-lg bg-white/5 text-neutral-400 hover:text-white"
-                  >
-                    <LogOut size={14} />
-                  </button>
-                </div>
+                </Link>
+                <button
+                  onClick={() => {
+                    logout();
+                    setMobileMenuOpen(false);
+                  }}
+                  title="Sign Out"
+                  className="p-2 rounded-xl bg-white/5 hover:bg-red-500/20 text-white/60 hover:text-red-400 transition-colors cursor-pointer"
+                  aria-label="Sign out"
+                >
+                  <LogOut size={15} />
+                </button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    openAuthModal('login');
-                  }}
-                  className="py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs border border-white/15 flex items-center justify-center gap-1.5"
-                >
-                  <User size={14} />
-                  <span>Sign In</span>
-                </button>
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    openAuthModal('signup');
-                  }}
-                  className="py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-neutral-950 font-bold text-xs flex items-center justify-center gap-1.5"
-                >
-                  <span>Sign Up</span>
-                </button>
-              </div>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  openAuthModal('login');
+                }}
+                className="w-full py-3 rounded-full bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold text-xs tracking-wider uppercase transition-colors cursor-pointer flex items-center justify-center gap-2"
+              >
+                <User size={14} className="text-amber-400" />
+                <span>Sign In to Account</span>
+              </button>
             )}
 
-            {/* Quick Status Pill */}
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between text-xs text-neutral-300">
-              <div className="flex items-center gap-2">
-                <MapPin size={14} className="text-amber-400" />
-                <span>Caldera Conditions</span>
-              </div>
-              <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-medium text-[11px]">
-                Optimal Sunrise (5:18 AM)
-              </span>
-            </div>
-
+            {/* Primary Action Button */}
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onScheduleClick?.();
               }}
-              className="w-full py-4 rounded-full bg-white text-neutral-950 font-bold text-sm tracking-wide shadow-xl active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
+              className="w-full py-3.5 rounded-full bg-white text-neutral-950 font-bold text-xs tracking-wider uppercase shadow-lg active:scale-98 transition-transform cursor-pointer flex items-center justify-center gap-2"
             >
-              <Calendar size={16} />
-              <span>Schedule Private Expedition</span>
+              <Calendar size={14} className="text-amber-600" />
+              <span>Schedule Expedition</span>
             </button>
 
-            <div className="flex items-center justify-center gap-6 pt-2 text-xs text-neutral-400">
-              <a href="tel:+6234129990" className="flex items-center gap-1.5 hover:text-white transition-colors">
-                <Phone size={13} />
-                <span>+62 (341) 299-90</span>
+            {/* Subtle Contact Info */}
+            <div className="pt-2 text-center">
+              <a
+                href="tel:+6234129990"
+                className="text-[11px] text-white/40 hover:text-white/70 transition-colors inline-flex items-center gap-1.5"
+              >
+                <Phone size={11} />
+                <span>Concierge Desk: +62 (341) 299-90</span>
               </a>
-              <span>•</span>
-              <div className="flex items-center gap-1">
-                <ShieldCheck size={13} className="text-amber-400" />
-                <span>Certified Guides</span>
-              </div>
             </div>
           </div>
         </div>
