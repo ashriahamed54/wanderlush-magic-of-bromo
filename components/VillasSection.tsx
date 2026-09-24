@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { Star, MapPin, CalendarDays, CircleDollarSign, UsersRound, ChevronDown, Search, Sparkles, Building2 } from 'lucide-react';
+import Reveal from '@/components/Reveal';
 
 export interface VillaItem {
   id: string;
@@ -141,24 +142,27 @@ export default function VillasSection({ onVillaSelect, onSearchSubmit }: VillasS
     <section id="services" className="w-full bg-white py-16 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
-        <div
-          className="text-center max-w-3xl mx-auto mb-8 sm:mb-12"
-        >
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 text-neutral-600 text-[10px] sm:text-xs font-mono uppercase tracking-wider mb-3">
-            <Building2 size={12} className="text-neutral-900" />
-            <span>EXCLUSIVE HIGHLAND SANCTUARIES</span>
+        <Reveal>
+          <div
+            className="text-center max-w-3xl mx-auto mb-8 sm:mb-12"
+          >
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 text-neutral-600 text-[10px] sm:text-xs font-mono uppercase tracking-wider mb-3">
+              <Building2 size={12} className="text-neutral-900" />
+              <span>EXCLUSIVE HIGHLAND SANCTUARIES</span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.2]">
+              A Selection Of Exceptional <br className="hidden sm:inline" />
+              Villas And Hotels
+            </h2>
           </div>
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.2]">
-            A Selection Of Exceptional <br className="hidden sm:inline" />
-            Villas And Hotels
-          </h2>
-        </div>
+        </Reveal>
 
         {/* Search / Filter Bar */}
-        <div
-          ref={filterRef}
-          className="max-w-3xl mx-auto mb-8 relative z-30"
-        >
+        <Reveal delay={80}>
+          <div
+            ref={filterRef}
+            className="max-w-3xl mx-auto mb-8 relative z-30"
+          >
           {/* Desktop & Tablet Unified Bar (hidden on small mobile < 640px) */}
           <div className="hidden sm:flex items-center justify-between p-2 rounded-full bg-white border border-neutral-200/90 shadow-lg shadow-neutral-200/50 gap-2">
             {/* Date Filter */}
@@ -406,82 +410,84 @@ export default function VillasSection({ onVillaSelect, onSearchSubmit }: VillasS
             </button>
           </div>
         </div>
+        </Reveal>
 
         {/* Category Pills with smooth horizontal scrolling */}
-        <div
-          className="relative mb-10 sm:mb-12"
-        >
-          <div className="flex items-center justify-start md:justify-center gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-none">
-            {CATEGORIES.map((cat) => {
-              const isActive = selectedCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  id={`cat-pill-${cat.toLowerCase().replace(/\s+/g, '-')}`}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 sm:px-5 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 cursor-pointer shrink-0 active:scale-95 ${
-                    isActive
-                      ? 'bg-neutral-900 text-white shadow-sm font-semibold'
-                      : 'bg-neutral-100/90 text-neutral-600 hover:bg-neutral-200/80 hover:text-neutral-900'
-                  }`}
-                >
-                  {cat}
-                </button>
-              );
-            })}
+        <Reveal delay={100}>
+          <div className="relative mb-10 sm:mb-12">
+            <div className="flex items-center justify-start md:justify-center gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-none">
+              {CATEGORIES.map((cat) => {
+                const isActive = selectedCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    id={`cat-pill-${cat.toLowerCase().replace(/\s+/g, '-')}`}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`px-4 sm:px-5 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 cursor-pointer shrink-0 active:scale-95 ${
+                      isActive
+                        ? 'bg-neutral-900 text-white shadow-sm font-semibold'
+                        : 'bg-neutral-100/90 text-neutral-600 hover:bg-neutral-200/80 hover:text-neutral-900'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        </Reveal>
 
         {/* Villa Cards Grid: Adapts cleanly on Tablet (2 cols) & Desktop (3 cols) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
-          {filteredVillas.map((villa) => (
-            <div
-              key={villa.id}
-              id={`villa-card-${villa.id}`}
-              onClick={() => onVillaSelect(villa)}
-              className="relative h-[380px] sm:h-[400px] lg:h-[420px] rounded-3xl overflow-hidden cursor-pointer group shadow-sm hover:shadow-2xl active:scale-[0.99] transition-shadow duration-300"
-            >
-              {/* Image */}
-              <Image
-                src={villa.image}
-                alt={villa.name}
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                referrerPolicy="no-referrer"
-              />
+          {filteredVillas.map((villa, idx) => (
+            <Reveal key={villa.id} delay={(idx % 3) * 90}>
+              <div
+                id={`villa-card-${villa.id}`}
+                onClick={() => onVillaSelect(villa)}
+                className="relative h-[380px] sm:h-[400px] lg:h-[420px] rounded-3xl overflow-hidden cursor-pointer group shadow-sm hover:shadow-2xl active:scale-[0.99] transition-shadow duration-300"
+              >
+                {/* Image */}
+                <Image
+                  src={villa.image}
+                  alt={villa.name}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  referrerPolicy="no-referrer"
+                />
 
-              {/* Gradient depth */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/30" />
+                {/* Gradient depth */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/30" />
 
-              {/* Star Rating Badge top right */}
-              <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/70 border border-white/20 text-white text-xs font-semibold shadow-md">
-                <Star size={13} className="text-amber-400 fill-amber-400" />
-                <span>{villa.rating.toFixed(1)}</span>
-              </div>
+                {/* Star Rating Badge top right */}
+                <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/70 border border-white/20 text-white text-xs font-semibold shadow-md">
+                  <Star size={13} className="text-amber-400 fill-amber-400" />
+                  <span>{villa.rating.toFixed(1)}</span>
+                </div>
 
-              {/* Bottom Info Bar Overlay */}
-              <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 right-3.5 sm:right-4 z-10 p-4 sm:p-5 rounded-2xl bg-black/85 border border-white/15 flex items-center justify-between text-white shadow-xl">
-                <div className="pr-2 truncate">
-                  <h3 className="text-base sm:text-lg font-bold tracking-tight text-white mb-0.5 truncate">
-                    {villa.name}
-                  </h3>
-                  <div className="flex items-center gap-1.5 text-white/80 text-xs font-normal truncate">
-                    <MapPin size={12} className="text-amber-400 shrink-0" />
-                    <span className="truncate">{villa.location}</span>
+                {/* Bottom Info Bar Overlay */}
+                <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 right-3.5 sm:right-4 z-10 p-4 sm:p-5 rounded-2xl bg-black/85 border border-white/15 flex items-center justify-between text-white shadow-xl">
+                  <div className="pr-2 truncate">
+                    <h3 className="text-base sm:text-lg font-bold tracking-tight text-white mb-0.5 truncate">
+                      {villa.name}
+                    </h3>
+                    <div className="flex items-center gap-1.5 text-white/80 text-xs font-normal truncate">
+                      <MapPin size={12} className="text-amber-400 shrink-0" />
+                      <span className="truncate">{villa.location}</span>
+                    </div>
+                  </div>
+
+                  <div className="text-right shrink-0">
+                    <span className="text-lg sm:text-2xl font-bold tracking-tight text-white">
+                      ${villa.price}
+                    </span>
+                    <span className="block text-[10px] text-white/70 font-normal">
+                      / night
+                    </span>
                   </div>
                 </div>
-
-                <div className="text-right shrink-0">
-                  <span className="text-lg sm:text-2xl font-bold tracking-tight text-white">
-                    ${villa.price}
-                  </span>
-                  <span className="block text-[10px] text-white/70 font-normal">
-                    / night
-                  </span>
-                </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>

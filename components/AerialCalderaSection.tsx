@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { MountainSnow, Compass, Eye, Crosshair, ArrowUpRight, Sparkles } from 'lucide-react';
+import Reveal from './Reveal';
 
 export interface VolcanoPeak {
   id: string;
@@ -69,9 +70,10 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
     <section className="w-full bg-white pb-16 sm:pb-24 lg:pb-28 px-4 sm:px-8 lg:px-12">
       <div className="max-w-7xl mx-auto">
         {/* Main Aerial Card */}
-        <div
-          className="relative w-full h-[520px] sm:h-[580px] md:h-[660px] rounded-3xl overflow-hidden shadow-2xl bg-neutral-950 border border-neutral-800 select-none flex flex-col justify-between"
-        >
+        <Reveal>
+          <div
+            className="relative w-full h-[520px] sm:h-[580px] md:h-[660px] rounded-3xl overflow-hidden shadow-2xl bg-neutral-950 border border-neutral-800 select-none flex flex-col justify-between"
+          >
           {/* Background Aerial Monochrome / Deep Contrast Caldera Image */}
           <Image
             src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=2070&auto=format&fit=crop"
@@ -332,7 +334,8 @@ export default function AerialCalderaSection({ onPeakSelect }: AerialCalderaSect
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  );
+      </Reveal>
+    </div>
+  </section>
+);
 }

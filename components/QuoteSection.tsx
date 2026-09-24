@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Reveal from '@/components/Reveal';
 
 export default function QuoteSection() {
   return (
@@ -23,16 +24,18 @@ export default function QuoteSection() {
       </div>
 
       <div className="relative max-w-4xl mx-auto text-center">
-        {/* Subtle decorative quote mark */}
-        <span className="block text-3xl sm:text-4xl text-neutral-300 font-serif mb-2 select-none">
-          &ldquo;
-        </span>
-        <blockquote className="text-base sm:text-xl md:text-2xl lg:text-3xl text-neutral-800 font-normal leading-[1.75] sm:leading-[1.65] tracking-[-0.01em]">
-          The beauty of Bromo Mountain lies in its stunning landscapes, ranging from vast volcanic craters to picturesque savannahs and lush forests. The mountain is surrounded by a sea of sand, which gives it a surreal, otherworldly quality that is truly breathtaking.
-        </blockquote>
-        <div className="mt-5 sm:mt-7 flex items-center justify-center gap-2 text-[10px] sm:text-xs font-mono tracking-widest text-neutral-400 uppercase">
-          <span>Bromo Tengger Semeru Expeditionary Record</span>
-        </div>
+        <Reveal>
+          {/* Subtle decorative quote mark */}
+          <span className="block text-3xl sm:text-4xl text-neutral-300 font-serif mb-2 select-none">
+            &ldquo;
+          </span>
+          <blockquote className="text-base sm:text-xl md:text-2xl lg:text-3xl text-neutral-800 font-normal leading-[1.75] sm:leading-[1.65] tracking-[-0.01em]">
+            The beauty of Bromo Mountain lies in its stunning landscapes, ranging from vast volcanic craters to picturesque savannahs and lush forests. The mountain is surrounded by a sea of sand, which gives it a surreal, otherworldly quality that is truly breathtaking.
+          </blockquote>
+          <div className="mt-5 sm:mt-7 flex items-center justify-center gap-2 text-[10px] sm:text-xs font-mono tracking-widest text-neutral-400 uppercase">
+            <span>Bromo Tengger Semeru Expeditionary Record</span>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
