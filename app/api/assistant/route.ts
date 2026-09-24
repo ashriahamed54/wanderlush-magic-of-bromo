@@ -1,107 +1,22 @@
-import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { action, dates, budget, guests, category, interest, name, email } = body;
+    const { action, dates, guests } = body;
 
-    const apiKey = process.env.GEMINI_API_KEY;
-
-    // If API key is available, call Gemini securely server-side
-    if (apiKey && apiKey !== "MY_GEMINI_API_KEY") {
-      const ai = new GoogleGenAI({ apiKey });
-
-      if (action === "plan_itinerary") {
-        const prompt = `You are a high-end luxury expedition concierge for "Wanderlush", specializing in Bromo Tengger Semeru National Park, East Java, Indonesia.
-Create an exclusive, structured itinerary with timing, highlights, luxury recommendations, and volcanic safety tips.
-User parameters:
-- Travel Dates / Duration: ${dates || "2-3 Days"}
-- Budget Tier: ${budget || "Luxury ($250-$500/night)"}
-- Party Size: ${guests || "2 Guests"}
-- Primary Interests: ${interest || "Sunrise Viewpoint, Lava Jeep Tour, Luhur Poten Hindu Temple, Horseback Caldera Expedition"}
-- Preferred Accommodation: ${category || "Luxury Resort / Villa (e.g., Plataran Bromo or Jiwa Jawa Resort)"}
-
-Respond strictly in clean JSON format with the following keys:
-{
-  "title": "string",
-  "summary": "string",
-  "recommendedDays": [
-    {
-      "day": 1,
-      "theme": "string",
-      "schedule": [
-        { "time": "03:15 AM", "activity": "string", "location": "string", "tips": "string" }
-      ]
-    }
-  ],
-  "gearAdvice": ["string"],
-  "villaRecommendation": {
-    "name": "string",
-    "reason": "string",
-    "estimatedNightlyRate": "string"
-  }
-}`;
-
-        const response = await ai.models.generateContent({
-          model: "gemini-2.5-flash",
-          contents: prompt,
-          config: {
-            responseMimeType: "application/json",
-          },
-        });
-
-        const rawText = response.text || "{}";
-        try {
-          const parsed = JSON.parse(rawText);
-          return NextResponse.json({ success: true, data: parsed });
-        } catch {
-          return NextResponse.json({ success: true, data: { raw: rawText } });
-        }
-      }
-
-      if (action === "inquiry_or_schedule") {
-        const prompt = `A guest named ${name || "Traveler"} (${email || "no-email"}) has requested to schedule a trip with Wanderlush to Mount Bromo:
-Parameters:
-- Dates: ${dates || "Next Available Sunrise Expedition"}
-- Budget: ${budget || "Premium"}
-- Guests: ${guests || "2"}
-- Preferred Activity: ${interest || "Lava Jeep & Caldera Sunrise"}
-
-Generate a warm, professional, personalized booking confirmation and expedition preparation overview from the Wanderlush Expeditions Director. Provide:
-1. Personalized expedition greeting
-2. Private 4x4 Toyota Land Cruiser allocation
-3. Dawn thermal advisory (temperatures drop to 3°C / 37°F before dawn)
-4. Dedicated Tenggerese guide & photographer details
-5. Next confirmation step
-Keep it elegant, concise, and luxurious.`;
-
-        const response = await ai.models.generateContent({
-          model: "gemini-2.5-flash",
-          contents: prompt,
-        });
-
-        return NextResponse.json({
-          success: true,
-          confirmationId: `WL-${Math.floor(100000 + Math.random() * 900000)}`,
-          message: response.text,
-        });
-      }
-    }
-
-    // High quality fallback if API key is not yet configured
     if (action === "plan_itinerary") {
       return NextResponse.json({
         success: true,
         data: {
           title: "Curated 3-Day Bromo Celestial & Caldera Expedition",
-          summary: "An unforgettable private journey featuring King Kong Hill sunrise, private 4x4 lava exploration, sacred Luhur Poten blessings, and five-star mountain hospitality.",
+          summary: "An exclusive private journey featuring King Kong Hill sunrise, private 4x4 lava exploration, sacred Luhur Poten blessings, and five-star mountain hospitality.",
           recommendedDays: [
             {
               day: 1,
               theme: "Ascent & Highland Acclimatization",
               schedule: [
-                { time: "01:00 PM", activity: "Private luxury chauffeur transfer from Surabaya / Malang", location: "Bromo Highland Escarpment", tips: "Enjoy panoramic terrace tea at Plataran Bromo." },
+                { time: "01:00 PM", activity: "Private luxury transfer from Surabaya / Malang", location: "Bromo Highland Escarpment", tips: "Enjoy panoramic terrace tea at Plataran Bromo." },
                 { time: "04:30 PM", activity: "Sunset over Bukit Teletubbies & Green Savanna", location: "Southern Caldera", tips: "Golden light filters across the verdant rolling hills." },
                 { time: "07:30 PM", activity: "Stargazing and firepit dinner under the Milky Way", location: "Jiwa Jawa Amphitheater", tips: "Clear high-altitude skies reveal stellar nebulae." }
               ]
@@ -143,13 +58,13 @@ Keep it elegant, concise, and luxurious.`;
     return NextResponse.json({
       success: true,
       confirmationId: `WL-${Math.floor(100000 + Math.random() * 900000)}`,
-      message: `Thank you for scheduling with Wanderlush! Your expedition inquiry for ${guests || "2"} guests has been reserved. Our private concierge will reach out within 2 hours with your 4x4 Land Cruiser manifest and personalized itinerary.`
+      message: `Thank you for scheduling with Wanderlush! Your expedition inquiry for ${guests || "2"} guests on ${dates || "the upcoming season"} has been received. Our private concierge will reach out with your 4x4 Land Cruiser manifest and personalized itinerary.`
     });
 
   } catch (error: unknown) {
-    console.error("API error:", error);
+    console.error("Concierge API error:", error);
     return NextResponse.json(
-      { success: false, error: "Unable to process travel request" },
+      { success: false, error: "Unable to process expedition request" },
       { status: 500 }
     );
   }

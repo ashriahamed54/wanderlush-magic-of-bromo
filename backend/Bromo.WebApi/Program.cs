@@ -71,7 +71,7 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials()
-            .SetIsOriginAllowed(_ => true); // Supports AI Studio preview domains
+            .SetIsOriginAllowed(_ => true); // Supports dynamic cloud and preview deployments
     });
 });
 

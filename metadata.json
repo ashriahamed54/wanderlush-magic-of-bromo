@@ -1,6 +1,0 @@
-{
-  "name": "Wanderlush - Magic of Bromo",
-  "description": "Experience the magic of Bromo with Wanderlush. Curated volcanic expeditions, luxury villas, lava jeep tours, cultural heritage, and custom itineraries in Bromo Tengger Semeru National Park.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
