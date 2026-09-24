@@ -30,7 +30,7 @@ function getDotnetApiUrl(): string {
   return url.replace(/\/+$/, '');
 }
 
-// In-memory fallback database for the AI Studio preview environment
+// In-memory fallback cache when running isolated client tests
 interface StoredUser extends UserProfile {
   passwordHash: string;
 }
